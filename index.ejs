@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box li {
+            list-style: none;
+            padding: 10px 0;
+        }
+        
+        .box li span {
+            display: inline-block;
+            width: 200px;
+        }
+        
+        ol {
+            position: fixed;
+            right: 10px;
+            bottom: 20px;
+        }
+        
+        ol li {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <li>
+            <input type="checkbox">
+            <span>name</span>
+            <span>age</span>
+            <span>address</span>
+        </li>
+        <%data.forEach(file => {%>
+            <li>
+                <input type="checkbox">
+                <span><%=file.name%></span>
+                <span><%=file.age%></span>
+                <span><%=file.address%></span>
+            </li>
+            <%})%>
+    </div>
+    <ol>
+        <span class="before"><</span>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <span class="next">></span>
+    </ol>
+    <script src="jquery.js"></script>
+    <script>
+        var time = 1;
+        $(".next").on('click', function() {
+            time++;
+            $.ajax({
+                url: '/main',
+                type: 'post',
+                data: {
+                    limit: 10,
+                    time: time
+                },
+                success: function(data) {
+                    data.forEach(file => {
+                        $('.box').append(`<li><input type="checkbox"><span>${file.name}</span><span>${file.age}</span><span>${file.address}</span></li>`)
+                    })
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
